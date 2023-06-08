@@ -8,16 +8,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="user")
-public class UserDetails {
+public class UserInfo {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String email;
 	private String password;
-	private String rpassword;
-	private String firstname;
-	private String lastname;
+	private String rPassword;
+	private String fullName;
 	
 	
 	public int getId() {
@@ -38,30 +37,23 @@ public class UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRpassword() {
-		return rpassword;
+	public String getrPassword() {
+		return rPassword;
 	}
-	public void setRpassword(String rpassword) {
-		this.rpassword = rpassword;
+	public void setrPassword(String rPassword) {
+		this.rPassword = rPassword;
 	}
-	public String getFirstname() {
-		return firstname;
+	public String getFullName() {
+		return fullName;
 	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	
 	@Override
 	public String toString() {
-		return "UserDetails [email=" + email + ", password=" + password + ", rpassword=" + rpassword + ", firstname="
-				+ firstname + ", lastname=" + lastname + "]";
+		return "UserInfo [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + "]";
 	}
+	
 	
 	
 	
