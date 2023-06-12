@@ -37,8 +37,10 @@ public class HomeController {
 		
 		
 		boolean chk=userService.checkEmail(user.getEmail());
+		boolean ok=false;
 		if(chk) {
 			session.setAttribute("msz", "Email Id already exists");
+			ok=true;
 		}
 		else {
 			UserInfo userInfo=userService.createUser(user);
@@ -49,8 +51,13 @@ public class HomeController {
 				session.setAttribute("msz","Something wrong on server" );
 			}
 		}
+		if(ok) {
 		
-		return "redirect:/register";
+		return "redirect:/register";}
+		else
+		{
+			return "login";
+		}
 		
 	}
 

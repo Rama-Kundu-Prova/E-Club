@@ -17,6 +17,7 @@ public class UserInfo {
 	private String password;
 	private String rPassword;
 	private String fullName;
+	private boolean enable;
 	
 	
 	public int getId() {
@@ -49,10 +50,19 @@ public class UserInfo {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+	
+	public boolean isEnable() {
+		return enable;
+	}
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + "]";
+		return "UserInfo [id=" + id + ", email=" + email + ", password=" + password + ", rPassword=" + rPassword
+				+ ", fullName=" + fullName + ", enable=" + enable + "]";
 	}
+	
 	
 	
 	
