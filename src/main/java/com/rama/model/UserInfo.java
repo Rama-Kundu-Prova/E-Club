@@ -1,5 +1,6 @@
 package com.rama.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,11 +14,17 @@ public class UserInfo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@Column(nullable = false, unique = true, length = 45)
 	private String email;
+	@Column(nullable = false, length = 64)
 	private String password;
+	@Column(nullable = false, length = 64)
 	private String rPassword;
+	@Column(nullable = false, length = 42)
 	private String fullName;
 	private boolean enable;
+	@Column(name = "verification_code", length = 64)
+    private String verificationCode;
 	
 	
 	public int getId() {
@@ -57,11 +64,14 @@ public class UserInfo {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
-	@Override
-	public String toString() {
-		return "UserInfo [id=" + id + ", email=" + email + ", password=" + password + ", rPassword=" + rPassword
-				+ ", fullName=" + fullName + ", enable=" + enable + "]";
+	
+	public String getVerificationCode() {
+		return verificationCode;
 	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+	
 	
 	
 	
