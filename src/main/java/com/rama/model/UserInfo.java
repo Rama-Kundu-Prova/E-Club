@@ -14,19 +14,21 @@ public class UserInfo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column(nullable = false, unique = true, length = 45)
 	private String email;
-	@Column(nullable = false, length = 64)
 	private String password;
-	@Column(nullable = false, length = 64)
 	private String rPassword;
-	@Column(nullable = false, length = 42)
 	private String fullName;
 	private boolean enable;
-	@Column(name = "verification_code", length = 64)
     private String verificationCode;
+	private String role; 
 	
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public int getId() {
 		return id;
 	}

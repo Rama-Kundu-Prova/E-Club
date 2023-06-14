@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.rama.model.UserInfo;
 
-public class UserDetailsImpl implements UserDetails{
+public class CustomUserDetails implements UserDetails{
 	private UserInfo user;
 
-	public UserDetailsImpl(UserInfo user) {
+	public CustomUserDetails(UserInfo user) {
 		super();
 		this.user = user;
 	}

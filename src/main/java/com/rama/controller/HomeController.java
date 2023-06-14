@@ -3,6 +3,7 @@ package com.rama.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import com.rama.model.UserInfo;
 import com.rama.repository.UserRepository;
 import com.rama.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -24,7 +26,7 @@ public class HomeController {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@ModelAttribute
 	private void userDetails(Model m, Principal p) {
@@ -51,37 +53,65 @@ public class HomeController {
 	public String register() {
 		return "register";
 	}
-
 	@PostMapping("/createUser")
-	public String createuser(@ModelAttribute UserInfo user, HttpSession session) {
+	public String createUser(@ModelAttribute UserInfo user,HttpServletRequest request) {
 
-		boolean chk = userService.checkEmail(user.getEmail());
-		boolean ok = false;
-		if (chk) {
-			session.setAttribute("msz", "Email Id already exists");
-			ok = true;
-		} else {
-			UserInfo userInfo = userService.createUser(user);
-			if (userInfo != null) {
-				session.setAttribute("msz", "Registered Succcessfully");
-			} else {
-				session.setAttribute("msz", "Something wrong on server");
-			}
+		
+		 String url=request.getRequestURI().toString();
+		 url=url.replace(request.getServletPath(), "");
+		 
+		boolean f = userService.checkEmail(user.getEmail());
+		int ok=0;
+		
+		if (f) {
+			// session.setAttribute("msg", "Email Id alreday exists");
+			ok=1;
+			
 		}
-		if (ok) {
+		else
+		{
+			UserInfo userInfo = userService.createUser(user,url);
+			
 
+			/*if (userInfo != null) {
+				session.setAttribute("msg", "Register Sucessfully");
+			} else {
+				session.setAttribute("msg", "Something wrong on server");
+			}*/
+			
+		}
+		if(ok==1)
+		{
+			System.out.println("hereeeeeeeeeeeeeeeeeeeee");
 			return "redirect:/register";
-		} else {
+		}
+		else
+		{
 			return "login";
 		}
+	
 
+		
+
+		
+	}
+	@GetMapping("/verify")
+	public String verifyAccount(@Param("code") String code)
+	{
+		if(userService.verifyAccount(code))
+		{
+			
+			return "login";
+		}
+		else
+		{
+			
+			return "redirect:/register";
+		}
+		
 	}
 
-	@GetMapping("/loadForgetPassword")
-
-	public String loadForgetPassword() {
-		return "forget_password";
-	}
+	
     
 
 }

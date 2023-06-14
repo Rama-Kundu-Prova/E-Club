@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		UserInfo user=userRepo.findByEmail(email);
 		
 		if(user!=null) {
-			return new UserDetailsImpl(user);
+			return new CustomUserDetails(user);
 		}
 		throw new UsernameNotFoundException("user not available");
 	}

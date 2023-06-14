@@ -1,7 +1,6 @@
 package com.rama.controller;
 
 import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.rama.model.UserInfo;
 import com.rama.repository.UserRepository;
 import com.rama.service.UserServiceImpl;
@@ -41,41 +39,6 @@ public class UserController {
 		return "user/home";
 	}
 
-	@GetMapping("/changePassword")
-	public String loadChangePassword() {
-		return "user/change_password";
-	}
-
-	@PostMapping("/updatePassword")
-
-	public String changePassword(Principal p, @RequestParam("oldPass") String oldPass,
-			@RequestParam("newPass") String newPass, HttpSession session) {
-		String email = p.getName();
-		UserInfo loginUser = userRepository.findByEmail(email);
-
-		boolean f = bCryptPasswordEncoder.matches(oldPass, loginUser.getPassword());
-
-		if (f) {
-
-			loginUser.setPassword(bCryptPasswordEncoder.encode(newPass));
-			UserInfo updatePasswordUser = userRepository.save(loginUser);
-			if (updatePasswordUser != null) {
-
-				session.setAttribute("msg", "Password Change Sucess");
-			} else {
-				session.setAttribute("msg", "someThing wrong on server");
-			}
-		} else {
-			session.setAttribute("msg", "Old password incorrect");
-
-		}
-
-		return "redirect:/user/changePassword";
-	}
-
-	@GetMapping("/profile")
-	public String loadProfile() {
-		return "user/profile";
-	}
+	
 
 }
